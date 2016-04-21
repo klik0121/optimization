@@ -29,7 +29,7 @@ namespace Optimization.OneDimensional
             Tuple<double, double> segment = SegmentSearch.SvenMethod(function, x, 5);
             double a = segment.Item1; //начало отрезка
             double b = segment.Item2; //конец отрезка
-            CalculateFibonachiNumbers(b - a, eps);
+            CalculateFibonacciNumbers(b - a, eps);
             int n = itCount + 2;
             itCount = 2;
             //новые точки внутри отрезка [a; b]
@@ -76,16 +76,16 @@ namespace Optimization.OneDimensional
         /// Функция подготавливает нужное количество чисел Фибоначчи для заданной длины начального
         /// начального и конечного интервалов.
         /// </summary>
-        /// <param name="lenght">Длина начального интервала.</param>
-        /// <param name="expLenght">Минимальная длина отрезка. Характеризует
+        /// <param name="length">Длина начального интервала.</param>
+        /// <param name="expLength">Минимальная длина отрезка. Характеризует
         /// точность вычислений.</param>
-        protected void CalculateFibonachiNumbers(double lenght, double expLenght)
+        protected void CalculateFibonacciNumbers(double length, double expLength)
         {
             List<long> fib = new List<long>();
             fib.Add(1);
             fib.Add(1);
             int n = 1;
-            double k = lenght / expLenght;
+            double k = length / expLength;
             while(fib[n] < k)
             {
                 n++;
