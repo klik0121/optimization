@@ -53,7 +53,7 @@ namespace Optimization.NDimensional
                     this.FunctionCallCount += oneDimensional[i].FunctionCalls;
                     this.IterationCount += oneDimensional[i].IterationCount;
                     f = function(result);
-                    if(Math.Abs(f - prevF) > Accuracy) break;
+                    if(Math.Abs(f - prevF) <= Accuracy) break;
                 }                
             } 
             return result;
