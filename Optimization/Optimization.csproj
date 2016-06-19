@@ -39,19 +39,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NDimensional\CoordinateDescent.cs" />
+    <Compile Include="NDimensional\HookJeeves.cs" />
+    <Compile Include="NDimensional\INDimensionalOptimization.cs" />
+    <Compile Include="NDimensional\NDimensionalOptimization.cs" />
+    <Compile Include="NDimensional\NelderMead.cs" />
+    <Compile Include="NDimensional\NFunction.cs" />
     <Compile Include="OneDimensional\BisectionMethod.cs" />
     <Compile Include="OneDimensional\ChordMethod.cs" />
+    <Compile Include="OneDimensional\CubicApproximation.cs" />
     <Compile Include="OneDimensional\FibonacciNumbersMethod.cs" />
     <Compile Include="OneDimensional\GoldenSectionMethod.cs" />
     <Compile Include="OneDimensional\IOneDimensionalOptimization.cs" />
     <Compile Include="OneDimensional\MidPointMethod.cs" />
     <Compile Include="OneDimensional\OneDimensionalOptimization.cs" />
+    <Compile Include="OneDimensional\QuadraticApproximation.cs" />
+    <Compile Include="OneDimensional\QuadraticFunction.cs" />
     <Compile Include="OneDimensional\TangentsMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Derivative.cs" />
     <Compile Include="Utils\Fibonacci.cs" />
     <Compile Include="Utils\PostFix.cs" />
     <Compile Include="Utils\SegmentSearch.cs" />
+    <Compile Include="Utils\VectorHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -50,11 +50,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NDimensionalOptimizationTest.cs" />
     <Compile Include="OneDimensionalOptimizationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PostFixTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OptiimizationView\OptimizationView.csproj">
+      <Project>{68a9bd6c-4f46-4326-977c-e98993ba780f}</Project>
+      <Name>OptimizationView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Optimization\Optimization.csproj">
       <Project>{a4279de7-a594-447e-b4b6-e2174e0588cf}</Project>
       <Name>Optimization</Name>

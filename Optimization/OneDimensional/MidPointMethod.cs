@@ -23,23 +23,27 @@ namespace Optimization.OneDimensional
         /// функции.</returns>
         public override double GetMin(Func<double, double> function, double x = 0)
         {
+            IterationCount = 0;
             Derivative der = new Derivative(function);
             Tuple<double, double> segment = SegmentSearch.FindZero(der.GetFirstDerivative, x);
             double a = segment.Item1, b = segment.Item2,
                 r = (a + b) / 2,
                 derR = der.GetFirstDerivative(r);
+            FunctionCalls = 2;
             while(Math.Abs(derR) >= Accuracy)
             {
-                if(derR > 0)
+                IterationCount++;
+                if(derR > 0) //x* лежит в интервале [a; r]
                 {
                     b = r;
                 }
-                else
+                else //x* лежит в интервале [r; b]
                 {
                     a = r;
                 }
                 r = (a + b) / 2;
                 derR = der.GetFirstDerivative(r);
+                FunctionCalls += 2;
             }
             return r;
         }

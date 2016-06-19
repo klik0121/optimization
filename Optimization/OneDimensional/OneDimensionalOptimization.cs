@@ -12,38 +12,24 @@ namespace Optimization.OneDimensional
     /// </summary>
     public abstract class OneDimensionalOptimization: IOneDimensionalOptimization
     {
-        protected double eps; //точность
-        protected int itCount; //количество итераций
 
         #region IOneDimensionalOptimization Members
 
         /// <summary>
         /// Получает или задаёт количество итераций.
         /// </summary>
-        public int IterationCount
+        public int FunctionCalls
         {
-            get
-            {
-                return itCount;
-            }
-            set
-            {
-                itCount = value;
-            }
+            get;
+            set;
         }
         /// <summary>
         /// Получает или задаёт точность.
         /// </summary>
         public double Accuracy
         {
-            get
-            {
-                return eps;
-            }
-            set
-            {
-                eps = value;
-            }
+            get;
+            set;
         }
         /// <summary>
         /// Находит минимальное значение параметра унимодальной однопараметрической функции.
@@ -53,6 +39,17 @@ namespace Optimization.OneDimensional
         /// <returns>Возврщает минимальное значение параметра унимодальной однопараметрческой
         /// функции.</returns>
         public abstract double GetMin(Func<double, double> function, double x = 0);
+
+        #endregion
+
+        #region IOneDimensionalOptimization Members
+
+
+        public int IterationCount
+        {
+            get;
+            set;
+        }
 
         #endregion
     }

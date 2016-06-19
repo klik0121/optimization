@@ -26,12 +26,13 @@ namespace Optimization.OneDimensional
         /// функции.</returns>
         public override double GetMin(Func<double, double> function, double x = 0)
         {
+            IterationCount = 0;
             Tuple<double, double> segment = SegmentSearch.SvenMethod(function, x, 5);
             double a = segment.Item1; //начало отрезка
             double b = segment.Item2; //конец отрезка
-            CalculateFibonacciNumbers(b - a, eps);
-            int n = itCount + 2;
-            itCount = 2;
+            CalculateFibonacciNumbers(b - a, Accuracy);
+            int n = FunctionCalls + 2;
+            FunctionCalls = 2;
             //новые точки внутри отрезка [a; b]
             double x1 = a + fibonacci[n - 2] * (b - a) / fibonacci[n];
             double x2 = a + fibonacci[n - 1] * (b - a) / fibonacci[n];
@@ -39,7 +40,8 @@ namespace Optimization.OneDimensional
             int k = 1;
             while (k != n - 2)
             {
-                itCount++;
+                IterationCount++;
+                FunctionCalls++;
                 if (fx1 > fx2) //x* не принадлежит отрезку [a; x1]
                 {
                     a = x1;
@@ -62,10 +64,10 @@ namespace Optimization.OneDimensional
                 }
                 k++;
             }
-            itCount += 2;
+            FunctionCalls += 2;
             //x1 и x2 задают середину отрезка (x1 = x2 = (a + b) / 2). 
             //сдивгаем одну из точек на значение eps / 10 (константа неразличимости)
-            x2 = x1 + eps / 10;
+            x2 = x1 + Accuracy / 10;
             fx1 = function(x1);
             fx2 = function(x2);
             if (fx1 == fx2) a = x1;
@@ -91,7 +93,7 @@ namespace Optimization.OneDimensional
                 n++;
                 fib.Add(fib[n - 1] + fib[n - 2]);                
             }
-            IterationCount = n - 2;
+            FunctionCalls = n - 2;
             fibonacci = fib.ToArray();
         }
     }

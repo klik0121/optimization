@@ -19,5 +19,19 @@ namespace UnitTests
         {
             return Math.Pow(100 - x, 2);
         }
+        [TestMethod]
+        public void TestPostFixDimensions()
+        {
+            PostFix pf = new PostFix();
+            pf.CachePostFix("x + y + z * (x + y)");
+            Assert.IsTrue(pf.CachedDimCount == 3);
+        }
+        [TestMethod]
+        public void TestPostFixCalculation()
+        {
+            PostFix pf = new PostFix();
+            pf.CachePostFix("x + y + z * (x + y)");
+            Assert.IsTrue(pf.CalculateCached(new double[] {1, 0, 3}) == 4);
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace OptimizationView
             Application.SetCompatibleTextRenderingDefault(false);
             Controller controller = new Controller();
             Application.Run(controller.Run());
+            //Application.Run(new Form2());
         }
     }
 }

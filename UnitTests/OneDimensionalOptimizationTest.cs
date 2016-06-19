@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Optimization.OneDimensional;
 using Optimization.Utils;
+using OptimizationView;
+using System.Reflection;
 
 namespace UnitTests
 {
@@ -9,6 +11,7 @@ namespace UnitTests
     public class OneDimensionalOptimizationTest
     {
         double eps = 1e-5;
+
         [TestMethod]
         public void TestBisection()
         {
@@ -16,12 +19,6 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
-
-        protected double TestFunction(double x)
-        {
-            return Math.Pow(100 - x, 2);
-        }
-
         [TestMethod]
         public void TestGoldenSection()
         {
@@ -29,7 +26,6 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
-
         [TestMethod]
         public void TestFibonacci()
         {
@@ -37,7 +33,6 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
-
         [TestMethod]
         public void TestDerivative()
         {
@@ -54,7 +49,6 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
-
         [TestMethod]
         public void TestTangentsMethod()
         {
@@ -62,7 +56,6 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
-
         [TestMethod]
         public void TestMidPointMethod()
         {
@@ -70,6 +63,42 @@ namespace UnitTests
             opt.Accuracy = eps;
             Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
         }
+        [TestMethod]
+        public void TestFlags()
+        {
+            OneDimensionalMethod methods = OneDimensionalMethod.BisectionMethod;
+            methods |= OneDimensionalMethod.ChordMethod | OneDimensionalMethod.FibonacciNumbersMethod |
+                 OneDimensionalMethod.GoldenSectionMethod | OneDimensionalMethod.MidPointMethod |
+                  OneDimensionalMethod.TangentsMethod;
+            EnumCountAttribute attribute = (EnumCountAttribute)methods.GetType().GetCustomAttribute(typeof(EnumCountAttribute));
+            Assert.IsTrue(attribute.Count == 9);
 
+        }
+        [TestMethod]
+        public void TestQuadraticApproximation()
+        {
+            IOneDimensionalOptimization opt = new QuadraticApproximation();
+            opt.Accuracy = eps;
+            Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
+        }
+        [TestMethod]
+        public void TestCubicApproximation()
+        {
+            IOneDimensionalOptimization opt = new CubicApproximation();
+            opt.Accuracy = eps;
+            Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
+        }
+        [TestMethod]
+        public void TestQuadraticFunction()
+        {
+            IOneDimensionalOptimization opt = new QuadraticFunction();
+            opt.Accuracy = eps;
+            Assert.IsTrue(Math.Abs(opt.GetMin(TestFunction) - 100) < eps);
+        }
+
+        protected double TestFunction(double x)
+        {
+            return x * x - 200 * x + 100;
+        }      
     }
 }

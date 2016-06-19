@@ -22,12 +22,15 @@ namespace Optimization.OneDimensional
         /// функции.</returns>
         public override double GetMin(Func<double, double> function, double x = 0)
         {
+            IterationCount = 1;
             Derivative der = new Derivative(function);
             double derX = der.GetFirstDerivative(x);
+            FunctionCalls = 2;
             while(Math.Abs(derX) >= Accuracy)
             {
                 x = x - derX / der.GetSecondDerivative(x);
                 derX = der.GetFirstDerivative(x);
+                FunctionCalls += 5;
             }
             return x;
         }

@@ -14,9 +14,13 @@ namespace Optimization.OneDimensional
         /// <summary>
         /// Получает количество итераций алгоритма.
         /// </summary>
-        int IterationCount
+        int FunctionCalls
         {
             get;
+            set;
+        }
+        int IterationCount
+        { get;
             set;
         }
         /// <summary>

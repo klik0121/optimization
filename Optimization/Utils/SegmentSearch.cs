@@ -19,7 +19,7 @@ namespace Optimization.Utils
         /// <param name="d">Величина шага.</param>
         /// <returns>Возвращает кортеж из двух значений, задающих границы искомого отрезка.</returns>
         public static Tuple<double, double> SvenMethod(Func<double, double> function, double x0,
-            double d)
+            double d = 5)
         {
             double x1 = x0; //по окончании работы алгоритма хранит начало отрезка
             double x2 = x1 + d; //по окончании работы алгоритма хранит конец отрезка

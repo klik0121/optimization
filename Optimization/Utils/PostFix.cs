@@ -20,6 +20,15 @@ namespace Optimization.Utils
         private List<string> operators = new List<string> { "+", "-", "*", "/", "^", "(", ")",
             "sin", "cos", "tn", "ctg"};
         private Queue<string> queue;
+        private List<string> args;
+
+        /// <summary>
+        /// Возвращает мерность кешированной функции.
+        /// </summary>
+        public int CachedDimCount
+        {
+            get { return args.Count; }
+        }
 
         /// <summary>
         /// Перевод из инфиксной нотации в постфиксную.
@@ -30,6 +39,7 @@ namespace Optimization.Utils
         private Queue<string> PostFixNotation(string input)
         {
             input.Replace(" ", string.Empty);
+            args = new List<string>();
             Queue<string> outputSeparated = new Queue<string>();
             Stack<string> stack = new Stack<string>();
             foreach (string c in Separate(input))
@@ -56,9 +66,16 @@ namespace Optimization.Utils
                             stack.Push(c);
                         }
                     }
-                    else stack.Push(c);
+                    else
+                    {
+                        stack.Push(c);
+                    }
                 }
-                else outputSeparated.Enqueue(c);
+                else
+                {
+                    if (IsIdentificator(c) && !args.Contains(c)) args.Add(c);
+                    outputSeparated.Enqueue(c);
+                }
             }
             if (stack.Count > 0)
                 foreach (string c in stack)
@@ -168,7 +185,8 @@ namespace Optimization.Utils
         /// <param name="input">Выражение в инфиксной нотации.</param>
         public void CachePostFix(string input)
         {
-            queue = PostFixNotation(input);
+            args = new List<string>();
+            queue = PostFixNotation(input.Replace(" ",""));
         }
         /// <summary>
         /// Вычисляет кешированное выражение.
@@ -187,6 +205,38 @@ namespace Optimization.Utils
                     if (s == "x")
                     {
                         stack.Push(x.ToString());
+                    }
+                    else
+                    {
+                        stack.Push(s);
+                    }
+                }
+                else
+                {
+                    double summ = Calculate(s);
+                    stack.Push(summ.ToString());
+                }
+            }
+            queue = queueCopy;
+            return Convert.ToDouble(stack.Pop());
+        }
+        /// <summary>
+        /// Вычисляет кешированное выражение.
+        /// </summary>
+        /// <param name="x">Значение параметров функции.</param>
+        /// <returns>Возвращает результат вычисления кешированного выражения.</returns>
+        public double CalculateCached(double[] args)
+        {
+            Queue<string> queueCopy = new Queue<string>();
+            while (queue.Count > 0)
+            {
+                string s = queue.Dequeue();
+                queueCopy.Enqueue(s);
+                if (!operators.Contains(s))
+                {
+                    if (IsIdentificator(s))
+                    {
+                        stack.Push(args[this.args.IndexOf(s)].ToString());
                     }
                     else
                     {
@@ -273,6 +323,20 @@ namespace Optimization.Utils
                     }
             }
             return summ;
+        }
+        /// <summary>
+        /// Проверяет, является ли строка названием переменной.
+        /// </summary>
+        /// <param name="line">Строка.</param>
+        /// <returns>Возвращает true, если заданная строка может быть именем переменной.</returns>
+        private bool IsIdentificator(string line)
+        {
+            if (!char.IsLetter(line[0])) return false;
+            for(int i = 1; i < line.Length; i++)
+            {
+                if (!char.IsLetterOrDigit(line[1])) return false;
+            }
+            return true;
         }
     }
 }
